@@ -40,6 +40,7 @@
         input.value = "";
         if(data.length !== STUDIO_SIZE){
             alert("Invalid file.");
+            return;
         }
         var miiData = "";
         for(var i = 0;i < STUDIO_SIZE;i++)miiData += getByteStr(data[i]);
