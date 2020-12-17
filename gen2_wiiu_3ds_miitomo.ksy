@@ -87,10 +87,6 @@ seq:
     type: str
     size: 20
     encoding: utf-16le
-  - id: padding2
-    type: u2le
-  - id: checksum
-    type: u2le
 instances:
   favorite:
     value: data_1 >> 14 & 1

@@ -74,20 +74,20 @@ elif input_type == "3ds" or input_type == "wiiu" or input_type == "miitomo":
 
         key = bytes([0x59, 0xFC, 0x81, 0x7E, 0x64, 0x46, 0xEA, 0x61, 0x90, 0x34, 0x7B, 0x20, 0xE9, 0xBD, 0xCE, 0x52])
 
-        with open("temp.mii", "wb") as f:
+        with open("temp.3dsmii", "wb") as f:
             nonce = decoded_qr[:8]
             cipher = AES.new(key, AES.MODE_CCM, nonce + bytes([0, 0, 0, 0]))
             content = cipher.decrypt(decoded_qr[8:96])
-            result = content[:12] + nonce + content[12:]
+            result = content[:12] + nonce + content[12:92]
             f.write(result)
 
-        input_file = "temp.mii"
+        input_file = "temp.3dsmii"
 
     orig_mii = Gen2Wiiu3dsMiitomo.from_file(input_file)
 
-    if input_file == "temp.mii":
+    if input_file == "temp.3dsmii":
         try:
-            remove("temp.mii")
+            remove("temp.3dsmii")
         except PermissionError:
             print("Unable to remove temporary file.")
 elif input_type == "switch":

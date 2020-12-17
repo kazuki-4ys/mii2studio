@@ -6,9 +6,7 @@ from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 
 
 if parse_version(kaitaistruct.__version__) < parse_version('0.9'):
-    raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (
-        kaitaistruct.__version__))
-
+    raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (kaitaistruct.__version__))
 
 class Gen2Wiiu3dsMiitomo(KaitaiStruct):
     def __init__(self, _io, _parent=None, _root=None):
@@ -66,8 +64,6 @@ class Gen2Wiiu3dsMiitomo(KaitaiStruct):
         self.glasses = self._io.read_u2le()
         self.mole = self._io.read_u2le()
         self.creator_name = (self._io.read_bytes(20)).decode(u"utf-16le")
-        self.padding2 = self._io.read_u2le()
-        self.checksum = self._io.read_u2le()
 
     @property
     def glasses_color(self):
@@ -388,3 +384,5 @@ class Gen2Wiiu3dsMiitomo(KaitaiStruct):
 
         self._m_facial_hair_size = ((self.beard >> 6) & 15)
         return self._m_facial_hair_size if hasattr(self, '_m_facial_hair_size') else None
+
+
