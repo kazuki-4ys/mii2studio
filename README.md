@@ -56,7 +56,7 @@ You can use almost every Mii format with this script:
 
 It's possible to import or export a Mii from Mii Studio. To do that, please follow these steps.
 
-1. Add the Mii Studio Import/Export tool to your bookmarks: with the link `javascript:(function () {var s = document.createElement('script');s.setAttribute('src', 'https://riiconnect24.github.io/mii2studio/miistudio.js');document.body.appendChild(s);}());`
+1. Add the Mii Studio Import/Export tool to your bookmarks: with the link `javascript:(function () {var s = document.createElement('script');s.setAttribute('src', 'https://cdn.discordapp.com/attachments/671391178280665118/789105808411328512/miistudio.js');document.body.appendChild(s);}());`
 1. Go to the [Mii Studio](https://accounts.nintendo.com/mii_studio) website.
 
 ### Importing
@@ -67,9 +67,8 @@ It's possible to import or export a Mii from Mii Studio. To do that, please foll
 1. If your Mii isn't in the Studio format (which is 46 bytes) and is from a console, run the Mii you would like to convert through mii2studio if you haven't already.
 1. Open the Mii Studio Import/Export tool you bookmarked.  
 1. Press OK on the pop-up.
-1. Open the outputted Mii Studio file in a hex editor.
-1. Copy and paste the bytes of the Mii into the input field, without any spaces between the bytes.
-1. Refresh the page.
+1. Select a .studio file.
+1. The page will reload.(When the browser asks if you want to reload,Press reload.)
 1. Press "Continue editing" and the imported Mii should appear.
 1. Don't forget to save your Mii if you want to.
 
