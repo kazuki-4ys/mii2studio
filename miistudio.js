@@ -1,7 +1,15 @@
 (function() {
     const STUDIO_SIZE = 46;
+    var lang = (navigator.language) ? navigator.language : navigator.userLanguage;
+    var isLangJpn = lang && lang.toLowerCase().indexOf("ja") !== -1;
+    var message;
     if(!Uint8Array || !FileReader || !Blob){
-        alert("Your browser is not supported.");
+        if(isLangJpn){
+            message = "お使いになっているブラウザは対応していません。";
+        }else{
+            message = "Your browser is not supported.";
+        }
+        alert(message);
         return;
     }
     function getByteStr(byte){
@@ -39,13 +47,23 @@
         var data = new Uint8Array(reader.result);
         input.value = "";
         if(data.length !== STUDIO_SIZE){
-            alert("Invalid file.");
+            if(isLangJpn){
+                message = "無効なファイルです。";
+            }else{
+                message = "Invalid file.";
+            }
+            alert(message);
             return;
         }
         var miiData = "";
         for(var i = 0;i < STUDIO_SIZE;i++)miiData += getByteStr(data[i]);
         localStorage.setItem(storageURL, miiData);
-        alert("The page will reload.(When the browser asks if you want to reload,Press reload.)\nPress \"Continue editing\" and the imported Mii should appear.");
+        if(isLangJpn){
+            message = "このページを再読み込みします。(ブラウザに再読み込みするか聞かれましたら、\"再読み込み\" を選択してください。)\n\"つづきから\" を選択すると、インポートしたMiiが反映されます。";
+        }else{
+            message = "The page will reload.(When the browser asks if you want to reload,Press reload.)\nPress \"Continue editing\" and the imported Mii should appear.";
+        }
+        alert(message);
         location.reload();
     });
     var input = document.createElement("input");
@@ -61,20 +79,35 @@
     const urlre = /^https:\/\/studio\.mii\.nintendo\.com\/miis\/([0-9a-f]*)\/edit\?client_id=([0-9a-f]*)/;
     const res = urlre.exec(window.location.href);
     if (!res || res.length < 2) {
-        alert("This page isn't the correct page. Please edit the Mii you'd like to download and run this script again.");
+        if(isLangJpn){
+            message = "このページには対応していません。エクスポートしたいMiiを手直しするページに移動してからこのブックマークを実行してください。";
+        }else{
+            message = "This page isn't the correct page. Please edit the Mii you'd like to download and run this script again.";
+        }
+        alert(message);
         return;
     }
     const miiID = res[1];
     const clientID = res[2];
     const storageURL = `https%3A%2F%2Fstudio.mii.nintendo.com%2Fmiis%2F${miiID}%2Fedit%3Fclient_id%3D${clientID}`;
-    const load = confirm("Press OK to load a Mii data file.\nPress Cancel to extract this Mii's Mii data file.");
+    if(isLangJpn){
+        message = "Miiをインポートする場合はOKを、\nMiiをエクスポートする場合はキャンセルを選択してください。";
+    }else{
+        message = "Press OK to load a Mii data file.\nPress Cancel to extract this Mii's Mii data file.";
+    }
+    const load = confirm(message);
     if (load) {
         input.click();
         return;
     }
     var extractedMiiData = strToBytes(localStorage.getItem(storageURL));
     if (!extractedMiiData || extractedMiiData.length !== STUDIO_SIZE) {
-        alert("The Mii data is not currently stored. Please make a change to this Mii, revert the change, and refresh the page to try again.");
+        if(isLangJpn){
+            message = "Miiデータを取得できませんでした。Miiに何かしらの変更を加えてからもう一度お試しください。";
+        }else{
+            message = "The Mii data is not currently stored. Please make a change to this Mii, revert the change, and refresh the page to try again.";
+        }
+        alert(message);
         return;
     }
     var blob = new Blob([extractedMiiData]);
